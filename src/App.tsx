@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react'
+// import './App.css'
+// // ⬇ Place the Forwex logo PNG at src/assets/forwex-logo.png
+// import forwexLogo from './assets/forwex-logo.png'
 import './App.css'
-// ⬇ Place the Forwex logo PNG at src/assets/forwex-logo.png
 import forwexLogo from './assets/forwex-logo.png'
+import { useMouseParallax } from './hooks/useMouseParallax'
 
 const NAV_LINKS = ['Home', 'Services', 'Courses', 'Community', 'Blog', 'Contact Us']
 
@@ -92,43 +95,126 @@ const TECH_LINES: { angle: number; length: string }[] = [
   { angle: 290, length: '40%' },
 ]
 
+// function HeroVisual() {
+//   return (
+//     <div className="hero-visual" aria-hidden="true">
+//       {/* Hex grid texture */}
+//       <div className="visual-hex" />
+
+//       {/* Rings */}
+//       <div className="ring ring-1" />
+//       <div className="ring ring-2" />
+//       <div className="ring ring-3" />
+
+//       {/* Tech lines */}
+//       {TECH_LINES.map(({ angle, length }) => (
+//         <div
+//           key={angle}
+//           className="tech-line"
+//           style={{
+//             width: length,
+//             transform: `rotate(${angle}deg)`,
+//             marginTop: '-0.5px',
+//           }}
+//         />
+//       ))}
+
+//       {/* Central orb */}
+//       {/* <div className="center-orb" /> */}
+//       {/* Central logo — replaces orb */}
+//       <img
+//         src={forwexLogo}
+//         alt="Forwex Technologies"
+//         className="center-logo"
+//       />
+
+//       {/* Floating particles */}
+//       {PARTICLE_POSITIONS.map((pos, i) => (
+//         <div
+//           key={i}
+//           className="particle"
+//           style={{
+//             top: pos.top,
+//             left: pos.left,
+//             animationDuration: `${4.5 + i * 0.4}s`,
+//             animationDelay: `${i * 0.35}s`,
+//           }}
+//         />
+//       ))}
+//     </div>
+//   )
+// }
+/* ---------------------------------------------------------- */
+/*  HERO VISUAL — 3-ring reactor with hologram logo           */
+/* ---------------------------------------------------------- */
+
+// Orbital dots: [ringClass, dotCount, orbitPercent]
+const ORBITAL_RINGS = [
+  { cls: 'ring-1', dots: 2, size: '68%' },
+  { cls: 'ring-2', dots: 3, size: '84%' },
+  { cls: 'ring-3', dots: 1, size: '100%' },
+]
+
 function HeroVisual() {
   return (
     <div className="hero-visual" aria-hidden="true">
-      {/* Hex grid texture */}
+      {/* Hex grid texture layer */}
       <div className="visual-hex" />
 
-      {/* Rings */}
-      <div className="ring ring-1" />
-      <div className="ring ring-2" />
-      <div className="ring ring-3" />
+      {/* Depth glow behind everything */}
+      <div className="reactor-glow" />
 
-      {/* Tech lines */}
-      {TECH_LINES.map(({ angle, length }) => (
+      {/* Rings — each has its own orbital dot(s) via CSS */}
+      <div className="ring ring-1">
+        <span className="orbit-dot orbit-dot--a" />
+      </div>
+      <div className="ring ring-2">
+        <span className="orbit-dot orbit-dot--b" />
+        <span className="orbit-dot orbit-dot--c" />
+      </div>
+      <div className="ring ring-3">
+        <span className="orbit-dot orbit-dot--d" />
+      </div>
+
+      {/* Tech lines from center */}
+      {[30, 110, 200, 290].map(angle => (
         <div
           key={angle}
           className="tech-line"
-          style={{
-            width: length,
-            transform: `rotate(${angle}deg)`,
-            marginTop: '-0.5px',
-          }}
+          style={{ width: '38%', transform: `rotate(${angle}deg)` }}
         />
       ))}
 
-      {/* Central orb */}
-      <div className="center-orb" />
+      {/* Center hologram logo — replaces orb */}
+      <div className="logo-holo-wrap">
+        <div className="logo-holo-glow" />
+        <img
+          src={forwexLogo}
+          alt="Forwex Technologies"
+          className="logo-holo-img"
+          draggable={false}
+        />
+        {/* Scanline shimmer overlay */}
+        <div className="logo-holo-scan" />
+      </div>
 
-      {/* Floating particles */}
-      {PARTICLE_POSITIONS.map((pos, i) => (
+      {/* Floating ambient particles */}
+      {[
+        { top: '10%', left: '62%', dur: '5.2s', delay: '0s'    },
+        { top: '22%', left: '82%', dur: '4.8s', delay: '0.5s'  },
+        { top: '75%', left: '18%', dur: '6.1s', delay: '1s'    },
+        { top: '82%', left: '72%', dur: '4.4s', delay: '1.5s'  },
+        { top: '52%', left: '92%', dur: '5.7s', delay: '0.8s'  },
+        { top: '14%', left: '24%', dur: '6.3s', delay: '0.3s'  },
+      ].map((p, i) => (
         <div
           key={i}
           className="particle"
           style={{
-            top: pos.top,
-            left: pos.left,
-            animationDuration: `${4.5 + i * 0.4}s`,
-            animationDelay: `${i * 0.35}s`,
+            top: p.top,
+            left: p.left,
+            animationDuration: p.dur,
+            animationDelay: p.delay,
           }}
         />
       ))}
@@ -146,6 +232,18 @@ const STATS = [
   { value: '50+',   label: 'Expert Engineers'  },
 ]
 
+function ParallaxGrid() {
+  const ref = useMouseParallax()
+  return (
+    <div
+      ref={ref}
+      className="bg-hex-grid"
+      aria-hidden="true"
+      style={{ transition: 'transform 0.15s ease-out', willChange: 'transform' }}
+    />
+  )
+}
+
 /* ---------------------------------------------------------- */
 /*  APP                                                         */
 /* ---------------------------------------------------------- */
@@ -153,7 +251,9 @@ function App() {
   return (
     <div className="app">
       {/* Background layers */}
-      <div className="bg-hex-grid" aria-hidden="true" />
+      {/* <div className="bg-hex-grid" aria-hidden="true" /> */}
+      {/* Background layers — parallax grid */}
+      <ParallaxGrid />
       <div className="bg-radial"   aria-hidden="true" />
       <div className="scan-line"   aria-hidden="true" />
 
@@ -170,6 +270,11 @@ function App() {
               <span>EdTech · Software · Gaming</span>
             </div>
 
+            {/* <h1 className="hero-title">
+              <span className="hero-title__top">BUILD THE</span>
+              <span className="hero-title__highlight">FUTURE</span>
+              <span className="hero-title__bottom">WITH US</span>
+            </h1> */}
             <h1 className="hero-title">
               <span className="hero-title__top">BUILD THE</span>
               <span className="hero-title__highlight">FUTURE</span>

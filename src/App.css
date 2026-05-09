@@ -10,7 +10,7 @@
 /* =============================================
    BACKGROUND LAYER
    ============================================= */
-.bg-hex-grid {
+/* .bg-hex-grid {
   position: fixed;
   inset: 0;
   background-image:
@@ -19,6 +19,30 @@
   background-size: 60px 60px;
   pointer-events: none;
   z-index: 0;
+} */
+.bg-hex-grid {
+  position: fixed;
+  inset: -24px;
+  /* slightly oversized so parallax shift has room */
+  background-image:
+    linear-gradient(rgba(0, 212, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 212, 255, 0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+  animation: gridPulse 6s ease-in-out infinite;
+}
+
+@keyframes gridPulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.6;
+  }
 }
 
 .bg-radial {
@@ -31,7 +55,7 @@
   z-index: 0;
 }
 
-.scan-line {
+/* .scan-line {
   position: fixed;
   top: -2px;
   left: 0;
@@ -41,6 +65,23 @@
   animation: scanDown 8s linear infinite;
   opacity: 0.25;
   z-index: 1;
+} */
+.scan-line {
+  position: fixed;
+  top: -2px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(0, 212, 255, 0.15) 20%,
+      var(--accent-cyan) 50%,
+      rgba(0, 212, 255, 0.15) 80%,
+      transparent 100%);
+  animation: scanDown 10s linear infinite;
+  opacity: 0.35;
+  z-index: 1;
+  filter: blur(0.5px);
 }
 
 @keyframes scanDown {
@@ -294,38 +335,50 @@
 
 .hero-title {
   font-family: var(--font-display);
-  line-height: 1.05;
+  line-height: 1.0;
+  /* tighter — was 1.05 */
   font-weight: 900;
   display: flex;
   flex-direction: column;
+  gap: 0.05em;
+  /* subtle controlled gap between lines */
 }
 
 .hero-title__top {
-  font-size: clamp(2.8rem, 5.5vw, 4.5rem);
+  font-size: clamp(2.4rem, 4.8vw, 4rem);
+  /* slightly smaller — was 4.5rem */
   color: var(--text-primary);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
+  opacity: 0.85;
 }
 
 .hero-title__highlight {
-  font-size: clamp(3.2rem, 6.5vw, 5.5rem);
+  font-size: clamp(3rem, 6vw, 5rem);
+  /* slightly smaller — was 5.5rem */
   background: linear-gradient(135deg, #00d4ff 0%, #0070e0 60%, #00d4ff 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  letter-spacing: 0.03em;
+  letter-spacing: 0.08em;
   animation: shimmer 4s linear infinite;
 }
-
 @keyframes shimmer {
   0%   { background-position: 0% center; }
   100% { background-position: 200% center; }
 }
 
-.hero-title__bottom {
+/* .hero-title__bottom {
   font-size: clamp(2.8rem, 5.5vw, 4.5rem);
   color: var(--text-primary);
   letter-spacing: 0.04em;
+} */
+.hero-title__bottom {
+  font-size: clamp(2.4rem, 4.8vw, 4rem);
+  /* matches top */
+  color: var(--text-primary);
+  letter-spacing: 0.06em;
+  opacity: 0.85;
 }
 
 .hero-subtitle {
@@ -371,11 +424,23 @@
   transition: opacity 0.2s ease;
 }
 
-.btn-get-started:hover {
+/* .btn-get-started:hover {
   transform: translateY(-2px);
   box-shadow:
     0 0 36px rgba(0, 212, 255, 0.45),
     0 8px 24px rgba(0, 80, 180, 0.5);
+} */
+.btn-get-started:hover {
+  transform: translateY(-3px);
+  box-shadow:
+    0 0 0 1px rgba(0, 212, 255, 0.4),
+    0 0 40px rgba(0, 212, 255, 0.55),
+    0 0 80px rgba(0, 212, 255, 0.2),
+    0 8px 24px rgba(0, 80, 180, 0.5);
+}
+
+.btn-get-started:active {
+  transform: translateY(-1px);
 }
 
 .btn-get-started:hover::before {
@@ -388,8 +453,13 @@
   transition: transform 0.2s ease;
 }
 
-.btn-get-started:hover svg {
+/* .btn-get-started:hover svg {
   transform: translateX(4px);
+} */
+.btn-get-started:hover svg {
+  transform: translateX(6px);
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* springy */
 }
 
 .hero-meta {
@@ -432,140 +502,348 @@
   to   { opacity: 1; transform: translateX(0); }
 }
 
-/* Rings */
+/* =============================================
+   REACTOR RINGS — orbital rotation system
+   ============================================= */
+
+/* Depth glow behind rings */
+.reactor-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 55%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: radial-gradient(circle,
+      rgba(0, 112, 224, 0.18) 0%,
+      rgba(0, 212, 255, 0.06) 50%,
+      transparent 75%);
+  animation: reactorBreath 5s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes reactorBreath {
+
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+  }
+
+  50% {
+    transform: translate(-50%, -50%) scale(1.15);
+    opacity: 1;
+  }
+}
+
+/* Base ring style */
 .ring {
   position: absolute;
   top: 50%;
   left: 50%;
   border-radius: 50%;
   transform: translate(-50%, -50%);
-  border: 1px solid rgba(0, 212, 255, 0.18);
 }
 
 .ring-1 {
   width: 68%;
   aspect-ratio: 1;
-  border-color: rgba(0, 212, 255, 0.3);
+  border: 1.5px solid rgba(0, 212, 255, 0.35);
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.1), inset 0 0 12px rgba(0, 212, 255, 0.05);
   animation: spinCW 18s linear infinite;
-}
-
-.ring-1::before {
-  content: '';
-  position: absolute;
-  top: -4px;
-  left: 50%;
-  width: 8px;
-  height: 8px;
-  background: var(--accent-cyan);
-  border-radius: 50%;
-  box-shadow: 0 0 10px var(--accent-cyan), 0 0 20px var(--accent-cyan);
-  transform: translateX(-50%);
 }
 
 .ring-2 {
   width: 84%;
   aspect-ratio: 1;
-  border-color: rgba(0, 112, 224, 0.2);
-  animation: spinCCW 24s linear infinite;
-}
-
-.ring-2::before {
-  content: '';
-  position: absolute;
-  bottom: -4px;
-  right: 8%;
-  width: 6px;
-  height: 6px;
-  background: #0078ff;
-  border-radius: 50%;
-  box-shadow: 0 0 8px #0078ff, 0 0 16px #0078ff;
+  border: 1px solid rgba(0, 112, 224, 0.25);
+  box-shadow: 0 0 8px rgba(0, 112, 224, 0.08);
+  animation: spinCCW 26s linear infinite;
 }
 
 .ring-3 {
   width: 100%;
   aspect-ratio: 1;
-  border-color: rgba(0, 212, 255, 0.08);
-  animation: spinCW 36s linear infinite;
-  border-style: dashed;
+  border: 1px dashed rgba(0, 212, 255, 0.1);
+  animation: spinCW 42s linear infinite;
 }
 
-@keyframes spinCW  { to { transform: translate(-50%, -50%) rotate(360deg); } }
-@keyframes spinCCW { to { transform: translate(-50%, -50%) rotate(-360deg); } }
+@keyframes spinCW {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
 
-/* Center orb */
-.center-orb {
+@keyframes spinCCW {
+  to {
+    transform: translate(-50%, -50%) rotate(-360deg);
+  }
+}
+
+/* =============================================
+   ORBITAL DOTS — glowing dots that ride the rings
+   ============================================= */
+
+/* Common orbital dot base */
+.orbit-dot {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+}
+
+/* Ring 1 dot — top center */
+.orbit-dot--a {
+  width: 9px;
+  height: 9px;
+  top: -4.5px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 10px var(--accent-cyan), 0 0 22px var(--accent-cyan), 0 0 40px rgba(0, 212, 255, 0.4);
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+/* Ring 2 dot A — top right */
+.orbit-dot--b {
+  width: 7px;
+  height: 7px;
+  top: -3.5px;
+  right: 16%;
+  background: #0090ff;
+  box-shadow: 0 0 8px #0090ff, 0 0 18px #0090ff;
+  animation: dotPulse 2.4s ease-in-out infinite 0.3s;
+}
+
+/* Ring 2 dot B — bottom left */
+.orbit-dot--c {
+  width: 5px;
+  height: 5px;
+  bottom: -2.5px;
+  left: 20%;
+  background: rgba(0, 212, 255, 0.7);
+  box-shadow: 0 0 6px var(--accent-cyan);
+  animation: dotPulse 3s ease-in-out infinite 0.8s;
+}
+
+/* Ring 3 dot — very subtle */
+.orbit-dot--d {
+  width: 5px;
+  height: 5px;
+  top: -2.5px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 212, 255, 0.45);
+  box-shadow: 0 0 6px rgba(0, 212, 255, 0.4);
+  animation: dotPulse 4s ease-in-out infinite 0.6s;
+}
+
+@keyframes dotPulse {
+
+  0%,
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: translateX(-50%) scale(1.5);
+    opacity: 0.7;
+  }
+}
+
+/* For dots NOT centered (b, c, d without translateX) */
+.orbit-dot--b,
+.orbit-dot--c,
+.orbit-dot--d:not(.orbit-dot--a) {
+  animation-name: dotPulseSimple;
+}
+
+@keyframes dotPulseSimple {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1.5);
+    opacity: 0.6;
+  }
+}
+
+/* =============================================
+   HOLOGRAM LOGO — replaces center orb
+   ============================================= */
+
+.logo-holo-wrap {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 38%;
+  width: 46%;
   aspect-ratio: 1;
-  background: radial-gradient(circle at 35% 35%, #00d4ff 0%, #0058bb 55%, #020a18 100%);
-  border-radius: 50%;
-  box-shadow:
-    0 0 40px rgba(0, 212, 255, 0.4),
-    0 0 80px rgba(0, 112, 224, 0.3),
-    inset 0 0 30px rgba(0, 212, 255, 0.1);
-  animation: orbPulse 4s ease-in-out infinite;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: holoFloat 5s ease-in-out infinite;
 }
 
-.center-orb::after {
-  content: '';
+/* Animated glow behind logo */
+.logo-holo-glow {
   position: absolute;
-  inset: 15%;
+  inset: -10%;
   border-radius: 50%;
-  background: radial-gradient(circle at 40% 40%, rgba(255,255,255,0.25), transparent 70%);
+  background: radial-gradient(circle,
+      rgba(0, 212, 255, 0.22) 0%,
+      rgba(0, 112, 224, 0.12) 45%,
+      transparent 70%);
+  animation: glowBreath 4s ease-in-out infinite;
+  pointer-events: none;
 }
 
-@keyframes orbPulse {
-  0%, 100% { box-shadow: 0 0 40px rgba(0, 212, 255, 0.4), 0 0 80px rgba(0, 112, 224, 0.3); }
-  50%       { box-shadow: 0 0 60px rgba(0, 212, 255, 0.6), 0 0 120px rgba(0, 112, 224, 0.4); }
+@keyframes glowBreath {
+
+  0%,
+  100% {
+    opacity: 0.8;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.12);
+  }
 }
 
-/* Floating particles */
+/* The logo image */
+.logo-holo-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  position: relative;
+  z-index: 2;
+  filter:
+    drop-shadow(0 0 12px rgba(0, 212, 255, 0.8)) drop-shadow(0 0 28px rgba(0, 112, 224, 0.6)) drop-shadow(0 0 50px rgba(0, 212, 255, 0.25));
+  animation: holoGlowPulse 4s ease-in-out infinite;
+  /* Remove any white box from PNG */
+  mix-blend-mode: screen;
+  -webkit-user-drag: none;
+}
+
+@keyframes holoGlowPulse {
+
+  0%,
+  100% {
+    filter:
+      drop-shadow(0 0 12px rgba(0, 212, 255, 0.8)) drop-shadow(0 0 28px rgba(0, 112, 224, 0.6)) drop-shadow(0 0 50px rgba(0, 212, 255, 0.25));
+  }
+
+  50% {
+    filter:
+      drop-shadow(0 0 18px rgba(0, 212, 255, 1)) drop-shadow(0 0 40px rgba(0, 112, 224, 0.9)) drop-shadow(0 0 70px rgba(0, 212, 255, 0.4));
+  }
+}
+
+/* Holographic scanline shimmer over logo */
+.logo-holo-scan {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: linear-gradient(180deg,
+      transparent 0%,
+      rgba(0, 212, 255, 0.04) 45%,
+      rgba(0, 212, 255, 0.09) 50%,
+      rgba(0, 212, 255, 0.04) 55%,
+      transparent 100%);
+  background-size: 100% 200%;
+  animation: holoScan 3s linear infinite;
+  pointer-events: none;
+  z-index: 3;
+}
+
+@keyframes holoScan {
+  0% {
+    background-position: 0% -100%;
+  }
+
+  100% {
+    background-position: 0% 200%;
+  }
+}
+
+/* Float + slight 3D tilt */
+@keyframes holoFloat {
+
+  0%,
+  100% {
+    transform: translate(-50%, -50%) translateY(0px) rotate3d(1, 0.3, 0, 0deg);
+  }
+
+  33% {
+    transform: translate(-50%, -52%) translateY(-8px) rotate3d(1, 0.3, 0, 2deg);
+  }
+
+  66% {
+    transform: translate(-50%, -49%) translateY(-4px) rotate3d(1, 0.3, 0, -1.5deg);
+  }
+}
+
+/* =============================================
+   FLOATING AMBIENT PARTICLES
+   ============================================= */
+
 .particle {
   position: absolute;
   width: 4px;
   height: 4px;
   background: var(--accent-cyan);
   border-radius: 50%;
-  box-shadow: 0 0 6px var(--accent-cyan);
+  box-shadow: 0 0 8px var(--accent-cyan), 0 0 16px rgba(0, 212, 255, 0.4);
   animation: floatParticle var(--dur, 5s) ease-in-out infinite;
   animation-delay: var(--delay, 0s);
 }
 
-.particle::nth-child(1)  { --dur: 5.2s; --delay: 0s;   top: 10%; left: 60%; }
-.particle::nth-child(2)  { --dur: 4.8s; --delay: 0.5s; top: 20%; left: 80%; }
-.particle::nth-child(3)  { --dur: 6.1s; --delay: 1s;   top: 75%; left: 20%; }
-.particle::nth-child(4)  { --dur: 4.4s; --delay: 1.5s; top: 85%; left: 70%; }
-.particle::nth-child(5)  { --dur: 5.7s; --delay: 0.8s; top: 55%; left: 90%; }
-.particle::nth-child(6)  { --dur: 6.3s; --delay: 0.3s; top: 15%; left: 25%; }
-
 @keyframes floatParticle {
-  0%, 100% { transform: translateY(0px) scale(1); opacity: 0.7; }
-  50%       { transform: translateY(-14px) scale(1.3); opacity: 1; }
+
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.6;
+  }
+
+  50% {
+    transform: translateY(-16px) scale(1.4);
+    opacity: 1;
+  }
 }
 
-/* Hexagon grid overlay on visual */
+/* =============================================
+   HEX TEXTURE OVERLAY ON VISUAL
+   ============================================= */
+
 .visual-hex {
   position: absolute;
   inset: 0;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='52' viewBox='0 0 60 52'%3E%3Cpolygon points='30,2 58,17 58,47 30,62 2,47 2,17' fill='none' stroke='rgba(0,212,255,0.06)' stroke-width='1'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='52' viewBox='0 0 60 52'%3E%3Cpolygon points='30,2 58,17 58,47 30,62 2,47 2,17' fill='none' stroke='rgba(0,212,255,0.05)' stroke-width='1'/%3E%3C/svg%3E");
   background-size: 60px 52px;
   border-radius: 50%;
   opacity: 0.8;
+  pointer-events: none;
 }
 
-/* Tech lines from center */
+/* Tech lines */
 .tech-line {
   position: absolute;
   top: 50%;
   left: 50%;
   height: 1px;
-  background: linear-gradient(90deg, rgba(0, 212, 255, 0.5), transparent);
+  background: linear-gradient(90deg, rgba(0, 212, 255, 0.4), transparent);
   transform-origin: left center;
-  opacity: 0.5;
+  opacity: 0.4;
+  pointer-events: none;
 }
+
 
 /* =============================================
    STATS ROW
@@ -585,8 +863,15 @@
 }
 
 @keyframes fadeInUp {
-  from { opacity: 0; transform: translateY(24px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .stat-item {
