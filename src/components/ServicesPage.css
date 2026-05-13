@@ -1,0 +1,448 @@
+/* =============================================
+   SERVICES PAGE — CSS
+   Uses same CSS variables from index.css:
+   --bg-deep, --bg-mid, --accent-cyan, --accent-blue,
+   --accent-glow, --text-primary, --text-secondary,
+   --border-subtle, --font-display, --font-body
+   ============================================= */
+
+/* Per-card accent colours */
+:root {
+  --svc-cyan: #00d4ff;
+  --svc-blue: #0070e0;
+  --svc-violet: #7c3aed;
+}
+
+/* =============================================
+   SECTION WRAPPER
+   ============================================= */
+.svc-section {
+  position: relative;
+  min-height: 100vh;
+  /* grow if content needs more room */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 3rem 1.5rem;
+  /* generous but not excessive */
+  overflow: hidden;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+.svc-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* =============================================
+   BACKGROUND GLOWS
+   ============================================= */
+.svc-bg-glow {
+  position: absolute;
+  width: 500px;
+  height: 500px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(120px);
+}
+
+.svc-bg-glow--left {
+  top: -80px;
+  left: -160px;
+  background: radial-gradient(ellipse, rgba(0, 112, 224, 0.12) 0%, transparent 70%);
+}
+
+.svc-bg-glow--right {
+  bottom: -80px;
+  right: -160px;
+  background: radial-gradient(ellipse, rgba(124, 58, 237, 0.10) 0%, transparent 70%);
+}
+
+/* =============================================
+   SECTION HEADING
+   ============================================= */
+.svc-heading {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.svc-heading__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-display);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 0.75rem;
+  /* reduced from 1.1rem */
+}
+
+.svc-heading__dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  box-shadow: 0 0 8px var(--accent-cyan);
+  animation: pulse-dot 2.4s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 8px var(--accent-cyan);
+  }
+
+  50% {
+    opacity: 0.5;
+    box-shadow: 0 0 3px var(--accent-cyan);
+  }
+}
+
+.svc-heading__line {
+  display: inline-block;
+  width: 40px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-cyan), transparent);
+}
+
+.svc-heading__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  /* slightly smaller to save vertical space */
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: 0.6rem;
+  /* reduced from 1rem */
+  line-height: 1.1;
+}
+
+.svc-heading__highlight {
+  color: var(--accent-cyan);
+  text-shadow: 0 0 28px rgba(0, 212, 255, 0.4);
+}
+
+.svc-heading__sub {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  /* slightly smaller from 1rem */
+  color: var(--text-secondary);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* =============================================
+   GRID
+   ============================================= */
+.svc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  /* reduced from 1.5rem */
+}
+
+@media (max-width: 900px) {
+  .svc-grid {
+    grid-template-columns: 1fr;
+    max-width: 480px;
+    margin: 0 auto;
+  }
+}
+
+/* =============================================
+   CARD
+   ============================================= */
+.svc-card {
+  position: relative;
+  background: linear-gradient(145deg,
+      rgba(8, 19, 37, 0.95) 0%,
+      rgba(5, 12, 24, 0.85) 100%);
+  border: 1px solid var(--border-subtle);
+  border-radius: 16px;
+  padding: 1.5rem 1.5rem 1.4rem;
+  /* reduced from 2.2rem 1.8rem 2rem */
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  cursor: default;
+  transition:
+    border-color 0.35s ease,
+    transform 0.35s ease,
+    box-shadow 0.35s ease;
+  animation: card-fade-in 0.55s ease both;
+  backdrop-filter: blur(8px);
+}
+
+@keyframes card-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Per-card accent colours ── */
+.svc-card--edtech {
+  --card-accent: var(--svc-cyan);
+}
+
+.svc-card--software {
+  --card-accent: var(--svc-blue);
+}
+
+.svc-card--marketing {
+  --card-accent: var(--svc-violet);
+}
+
+/* ── Hover state ── */
+.svc-card--hovered {
+  border-color: color-mix(in srgb, var(--card-accent) 45%, transparent);
+  transform: translateY(-6px);
+  box-shadow:
+    0 20px 50px rgba(0, 0, 0, 0.4),
+    0 0 30px color-mix(in srgb, var(--card-accent) 12%, transparent);
+}
+
+/* ── Top accent bar ── */
+.svc-card__bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent 0%, var(--card-accent) 50%, transparent 100%);
+  opacity: 0.7;
+  transition: opacity 0.35s ease;
+}
+
+.svc-card--hovered .svc-card__bar {
+  opacity: 1;
+}
+
+/* ── Corner hex decoration ── */
+.svc-card__corner {
+  position: absolute;
+  top: -30px;
+  right: -30px;
+  width: 90px;
+  height: 90px;
+  border: 1px solid color-mix(in srgb, var(--card-accent) 18%, transparent);
+  border-radius: 12px;
+  transform: rotate(20deg);
+  transition: border-color 0.35s ease, transform 0.5s ease;
+}
+
+.svc-card--hovered .svc-card__corner {
+  border-color: color-mix(in srgb, var(--card-accent) 35%, transparent);
+  transform: rotate(30deg);
+}
+
+/* ── Icon ── */
+.svc-card__icon-wrap {
+  position: relative;
+  width: 46px;
+  /* slightly smaller from 52px */
+  height: 46px;
+  margin-bottom: 0.85rem;
+  /* reduced from 1.4rem */
+  flex-shrink: 0;
+}
+
+.svc-card__icon-ring {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid color-mix(in srgb, var(--card-accent) 30%, transparent);
+  transition: border-color 0.35s ease;
+}
+
+.svc-card--hovered .svc-card__icon-ring {
+  border-color: color-mix(in srgb, var(--card-accent) 55%, transparent);
+}
+
+.svc-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  /* match icon-wrap */
+  height: 46px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--card-accent) 10%, transparent);
+  color: var(--card-accent);
+  transition: background 0.35s ease;
+}
+
+.svc-card--hovered .svc-card__icon {
+  background: color-mix(in srgb, var(--card-accent) 18%, transparent);
+}
+
+.svc-card__icon svg {
+  width: 22px;
+  /* slightly smaller from 26px */
+  height: 22px;
+}
+
+/* ── Tag ── */
+.svc-card__tag {
+  font-family: var(--font-display);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--card-accent);
+  margin-bottom: 0.25rem;
+  /* reduced from 0.35rem */
+  opacity: 0.85;
+}
+
+/* ── Label ── */
+.svc-card__label {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  /* slightly smaller from 1.5rem */
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  margin-bottom: 0.35rem;
+  /* reduced from 0.5rem */
+  line-height: 1;
+}
+
+/* ── Headline ── */
+.svc-card__headline {
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  /* slightly smaller from 0.88rem */
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 0.65rem;
+  /* reduced from 1rem */
+  line-height: 1.4;
+}
+
+/* ── Description ── */
+.svc-card__desc {
+  font-family: var(--font-body);
+  font-size: 0.84rem;
+  /* slightly smaller from 0.88rem */
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 0.9rem;
+  /* reduced from 1.4rem */
+  flex: 1;
+}
+
+/* ── Features ── */
+.svc-card__features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  /* reduced from 0.45rem */
+  margin-bottom: 1.1rem;
+  /* reduced from 1.8rem */
+}
+
+.svc-card__feature {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  /* slightly smaller from 0.82rem */
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.svc-card__feature-dot {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--card-accent);
+  flex-shrink: 0;
+  box-shadow: 0 0 5px color-mix(in srgb, var(--card-accent) 70%, transparent);
+}
+
+/* ── CTA button ── */
+.svc-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.6rem 1.3rem;
+  /* reduced from 0.75rem 1.6rem */
+  background: color-mix(in srgb, var(--card-accent) 15%, transparent);
+  border: 1px solid color-mix(in srgb, var(--card-accent) 35%, transparent);
+  border-radius: 8px;
+  color: var(--card-accent);
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  /* slightly smaller from 0.72rem */
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  width: fit-content;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    gap 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.svc-card__cta:hover {
+  background: color-mix(in srgb, var(--card-accent) 25%, transparent);
+  border-color: color-mix(in srgb, var(--card-accent) 60%, transparent);
+  gap: 0.85rem;
+  box-shadow: 0 0 16px color-mix(in srgb, var(--card-accent) 20%, transparent);
+}
+
+.svc-card__cta svg {
+  width: 14px;
+  /* slightly smaller from 15px */
+  height: 14px;
+  transition: transform 0.25s ease;
+}
+
+.svc-card__cta:hover svg {
+  transform: translateX(3px);
+}
+
+
+/* Tablet — 2-col instead of jumping straight to 1-col */
+@media (max-width: 900px) and (min-width: 601px) {
+  .svc-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 700px;
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .svc-grid {
+    grid-template-columns: 1fr;
+    max-width: 420px;
+    margin: 0 auto;
+  }
+}

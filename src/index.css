@@ -34,3 +34,9 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
 }
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  /* add this — prevents Safari horizontal scroll bug */
+}
