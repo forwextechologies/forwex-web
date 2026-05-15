@@ -4,9 +4,10 @@
 
 interface ServicesPageProps {
   onExploreEdTech: () => void
+  onExploreSoftware: () => void
 }
 
-export default function ServicesPage({ onExploreEdTech }: ServicesPageProps) {
+export default function ServicesPage({ onExploreEdTech, onExploreSoftware }: ServicesPageProps) {
   return (
     <section id="services" className="services-section">
 
@@ -91,19 +92,16 @@ export default function ServicesPage({ onExploreEdTech }: ServicesPageProps) {
             <li>API Integration</li>
           </ul>
 
-          {/* <a href="#" className="service-card__btn service-card__btn--software">
+          {/* ↓ This button navigates to the Software page */}
+          <button
+            className="service-card__btn service-card__btn--software"
+            onClick={onExploreSoftware}
+          >
             EXPLORE NOW
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
               <path d="M5 12h14M12 5l7 7-7 7" />
             </svg>
-          </a> */}
-        <button
-         className="your-existing-class-here"
-         onClick={onExploreEdTech}
-         style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
-        >
-          EXPLORE NOW →
-        </button>
+          </button>
         </div>
 
         {/* ── Marketing card ───────────────────────────── */}

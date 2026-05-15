@@ -4,6 +4,7 @@ import forwexLogo from './assets/forwex-logo.png'
 import { useMouseParallax } from './hooks/useMouseParallax'
 import ServicesPage from './components/ServicesPage'
 import EdTechPage from './components/EdTechPage'
+import SoftwarePage from './components/SoftwarePage'
 
 const NAV_LINKS = [
   { label: 'Home',       href: '#'         },
@@ -165,8 +166,8 @@ function ParallaxGrid() {
 /*  APP                                                         */
 /* ---------------------------------------------------------- */
 function App() {
-  // 'home' | 'edtech'
-  const [page, setPage] = useState<'home' | 'edtech'>('home')
+  // 'home' | 'edtech' | 'software'
+  const [page, setPage] = useState<'home' | 'edtech' | 'software'>('home')
 
   // Scroll to top whenever page changes
   useEffect(() => {
@@ -176,6 +177,11 @@ function App() {
   // ── EdTech page ─────────────────────────────────────────
   if (page === 'edtech') {
     return <EdTechPage onBack={() => setPage('home')} />
+  }
+
+  // ── Software page ────────────────────────────────────────
+  if (page === 'software') {
+    return <SoftwarePage onBack={() => setPage('home')} />
   }
 
   // ── Home page ────────────────────────────────────────────
@@ -252,7 +258,7 @@ function App() {
 
       {/* ── SERVICES ─────────────────────────────────────── */}
       {/* Pass the setter so ServicesPage can trigger navigation */}
-      <ServicesPage onExploreEdTech={() => setPage('edtech')} />
+      <ServicesPage onExploreEdTech={() => setPage('edtech')} onExploreSoftware={() => setPage('software')} />
     </div>
   )
 }
