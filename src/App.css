@@ -1055,3 +1055,765 @@
     font-size: 6.5rem;
   }
 }
+
+/* ==========================================================
+   SERVICES PAGE
+   ========================================================== */
+.services-section {
+  position: relative;
+  z-index: 2;
+  padding: 6rem 2rem;
+}
+
+.services-header {
+  max-width: 1280px;
+  margin: 0 auto 3.5rem;
+  text-align: center;
+}
+
+.services-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.eyebrow-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+  animation: badgePulse 2s ease-in-out infinite;
+}
+
+.eyebrow-line {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, var(--accent-cyan), transparent);
+}
+
+.services-eyebrow span {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+}
+
+.services-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.2rem);
+  font-weight: 900;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+}
+
+.services-title--accent {
+  color: var(--accent-cyan);
+  text-shadow: 0 0 30px rgba(0, 212, 255, 0.4);
+}
+
+.services-subtitle {
+  color: var(--text-secondary);
+  font-size: 1rem;
+  max-width: 620px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.services-grid {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ── Service card base ── */
+.service-card {
+  background: linear-gradient(135deg, rgba(8, 19, 37, 0.95), rgba(5, 12, 24, 0.9));
+  border: 1px solid rgba(0, 212, 255, 0.12);
+  border-radius: 12px;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.service-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 50px rgba(0, 212, 255, 0.1);
+}
+
+.service-card__icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: rgba(0, 212, 255, 0.08);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.4rem;
+}
+
+.service-card__icon svg {
+  width: 24px;
+  height: 24px;
+  color: var(--accent-cyan);
+}
+
+.service-card--software .service-card__icon svg,
+.service-card--marketing .service-card__icon svg {
+  color: var(--accent-blue);
+}
+
+.service-card__tag {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+}
+
+.service-card--software .service-card__tag,
+.service-card--marketing .service-card__tag {
+  color: var(--accent-blue);
+}
+
+.service-card__title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.service-card__subtitle {
+  font-size: 0.9rem;
+  color: var(--accent-cyan);
+  opacity: 0.85;
+}
+
+.service-card__desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  flex: 1;
+}
+
+.service-card__list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.service-card__list li {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  padding-left: 1rem;
+  position: relative;
+}
+
+.service-card__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-cyan);
+}
+
+/* ── Explore Now buttons ── */
+.service-card__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.4rem;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: 1px solid transparent;
+  margin-top: 0.4rem;
+  width: fit-content;
+}
+
+.service-card__btn svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+}
+
+.service-card__btn:hover svg {
+  transform: translateX(3px);
+}
+
+/* EdTech — teal outline */
+.service-card__btn--edtech {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(0, 112, 224, 0.1));
+  border-color: rgba(0, 212, 255, 0.4);
+  color: var(--accent-cyan);
+}
+
+.service-card__btn--edtech:hover {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  color: var(--bg-deep);
+  border-color: transparent;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.4);
+}
+
+/* Software — blue outline */
+.service-card__btn--software {
+  background: linear-gradient(135deg, rgba(0, 112, 224, 0.1), rgba(0, 212, 255, 0.05));
+  border-color: rgba(0, 112, 224, 0.4);
+  color: var(--accent-blue);
+}
+
+.service-card__btn--software:hover {
+  background: linear-gradient(135deg, var(--accent-blue), var(--accent-cyan));
+  color: var(--bg-deep);
+  border-color: transparent;
+}
+
+/* Marketing — purple-ish */
+.service-card__btn--marketing {
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.12), rgba(0, 212, 255, 0.05));
+  border-color: rgba(124, 58, 237, 0.4);
+  color: #a78bfa;
+}
+
+.service-card__btn--marketing:hover {
+  background: linear-gradient(135deg, #7c3aed, #a78bfa);
+  color: #fff;
+  border-color: transparent;
+}
+
+
+/* ==========================================================
+   EDTECH PAGE
+   ========================================================== */
+
+/* ── Back button ── */
+.et-back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 1.8rem;
+  transition: color 0.2s ease;
+}
+
+.et-back-btn svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+}
+
+.et-back-btn:hover {
+  color: var(--accent-cyan);
+}
+
+.et-back-btn:hover svg {
+  transform: translateX(-3px);
+}
+
+/* ── Eyebrow shared ── */
+.et-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.8rem;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+}
+
+.et-eyebrow__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0, 212, 255, 0.4), transparent);
+  max-width: 120px;
+}
+
+/* ── Hero ── */
+.et-hero {
+  position: relative;
+  z-index: 2;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 130px 2rem 3rem;
+  animation: fadeInLeft 0.8s ease both;
+}
+
+.et-hero__title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3.8rem);
+  font-weight: 900;
+  line-height: 1.1;
+  margin-bottom: 1.2rem;
+}
+
+.et-hero__title--white { color: var(--text-primary); }
+.et-hero__title--cyan  {
+  color: var(--accent-cyan);
+  text-shadow: 0 0 30px rgba(0, 212, 255, 0.5);
+}
+
+.et-hero__subtitle {
+  color: var(--text-secondary);
+  font-size: 1.05rem;
+  max-width: 580px;
+  line-height: 1.7;
+  margin-bottom: 2rem;
+}
+
+.et-hero__stats {
+  margin-top: 1rem;
+}
+
+/* ── Generic section ── */
+.et-section {
+  position: relative;
+  z-index: 2;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 3.5rem 2rem;
+}
+
+.et-section__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+  margin-bottom: 2.5rem;
+}
+
+.et-section__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-top: 0.3rem;
+}
+
+.et-section__title--cyan {
+  color: var(--accent-cyan);
+}
+
+.et-section__line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(0, 212, 255, 0.25), transparent);
+  margin-bottom: 0.3rem;
+}
+
+/* ── Filter buttons ── */
+.et-filters {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.et-filter-btn {
+  background: transparent;
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  color: var(--text-secondary);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.45rem 1.1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.et-filter-btn:hover,
+.et-filter-btn--active {
+  background: rgba(0, 212, 255, 0.1);
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+/* ── Courses grid ── */
+.et-courses-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.et-course-card {
+  background: linear-gradient(135deg, rgba(8, 19, 37, 0.95), rgba(5, 12, 24, 0.9));
+  border: 1px solid rgba(0, 212, 255, 0.12);
+  border-radius: 12px;
+  padding: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  position: relative;
+  overflow: hidden;
+  animation: fadeInUp 0.6s ease both;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.et-course-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 60px rgba(0, 212, 255, 0.12);
+}
+
+.et-course-card__glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 120px;
+  pointer-events: none;
+}
+
+.et-course-card__top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.et-course-card__icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: rgba(0, 212, 255, 0.08);
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+}
+
+.et-course-card__badge {
+  font-family: var(--font-body);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 1px solid;
+  padding: 0.2rem 0.6rem;
+  border-radius: 3px;
+  animation: badgePulse 2.5s ease-in-out infinite;
+}
+
+.et-course-card__tag {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.et-course-card__title {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.et-course-card__subtitle {
+  font-size: 0.78rem;
+  color: var(--accent-cyan);
+  letter-spacing: 0.04em;
+  opacity: 0.8;
+  margin-top: 0.2rem;
+}
+
+.et-course-card__desc {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  flex: 1;
+}
+
+.et-course-card__meta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.et-course-card__divider {
+  height: 1px;
+  background: rgba(0, 212, 255, 0.08);
+}
+
+/* ── Enroll button ── */
+.et-enroll-btn {
+  width: 100%;
+  padding: 0.7rem 1.2rem;
+  background: transparent;
+  border: 1px solid rgba(0, 212, 255, 0.35);
+  border-radius: 6px;
+  color: var(--accent-cyan);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.et-enroll-btn svg {
+  width: 14px;
+  height: 14px;
+  transition: transform 0.2s ease;
+}
+
+.et-enroll-btn:hover {
+  background: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
+  color: var(--bg-deep);
+  border-color: transparent;
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+}
+
+.et-enroll-btn:hover svg {
+  transform: translateX(3px);
+}
+
+/* ── How It Works ── */
+.et-how-section {
+  position: relative;
+  z-index: 2;
+  background: rgba(8, 19, 37, 0.4);
+  border-top: 1px solid rgba(0, 212, 255, 0.06);
+  border-bottom: 1px solid rgba(0, 212, 255, 0.06);
+  padding: 4rem 2rem;
+}
+
+.et-how-section__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.et-how-section__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.et-how-section__eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 0.5rem;
+}
+
+.et-steps-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.et-step-card {
+  padding: 1.8rem;
+  background: rgba(5, 12, 24, 0.7);
+  border: 1px solid rgba(0, 212, 255, 0.1);
+  border-radius: 10px;
+  animation: fadeInUp 0.6s ease both;
+}
+
+.et-step-card__num {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: rgba(0, 212, 255, 0.1);
+  line-height: 1;
+  margin-bottom: 0.8rem;
+  user-select: none;
+}
+
+.et-step-card__title {
+  font-family: var(--font-display);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.6rem;
+}
+
+.et-step-card__desc {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ── Workshops ── */
+.et-workshops-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.et-workshop-card {
+  background: rgba(8, 19, 37, 0.7);
+  border: 1px solid rgba(0, 212, 255, 0.12);
+  border-radius: 10px;
+  padding: 1.3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  animation: fadeInUp 0.5s ease both;
+}
+
+.et-workshop-card:hover {
+  background: rgba(0, 212, 255, 0.06);
+  border-color: rgba(0, 212, 255, 0.28);
+}
+
+.et-workshop-card__icon { font-size: 1.6rem; }
+
+.et-workshop-card__title {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  line-height: 1.3;
+}
+
+.et-workshop-card__meta {
+  display: flex;
+  gap: 0.8rem;
+  align-items: center;
+}
+
+.et-workshop-card__duration {
+  font-size: 0.72rem;
+  color: var(--accent-cyan);
+  background: rgba(0, 212, 255, 0.1);
+  padding: 0.2rem 0.6rem;
+  border-radius: 3px;
+}
+
+.et-workshop-card__seats {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+}
+
+/* ── CTA banner ── */
+.et-cta-section {
+  position: relative;
+  z-index: 2;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.et-cta-card {
+  max-width: 800px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, rgba(0, 112, 224, 0.1), rgba(0, 212, 255, 0.06));
+  border: 1px solid rgba(0, 212, 255, 0.18);
+  border-radius: 16px;
+  padding: 3.5rem 2.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.et-cta-card__glow {
+  position: absolute;
+  top: -40%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 80%;
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.08), transparent 70%);
+  pointer-events: none;
+}
+
+.et-cta-card__eyebrow {
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--accent-cyan);
+  margin-bottom: 1rem;
+}
+
+.et-cta-card__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-weight: 900;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin-bottom: 1.2rem;
+}
+
+.et-cta-card__desc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.7;
+  max-width: 500px;
+  margin: 0 auto 2rem;
+}
+
+.et-cta-card__btn {
+  display: inline-flex;
+}
+
+/* ── Footer ── */
+.et-footer {
+  position: relative;
+  z-index: 2;
+  border-top: 1px solid rgba(0, 212, 255, 0.08);
+  padding: 2rem;
+  text-align: center;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: rgba(123, 168, 204, 0.5);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── Shared keyframes (in case they're not already in App.css) ── */
+@keyframes badgePulse {
+  0%, 100% { opacity: 1;   }
+  50%       { opacity: 0.7; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}

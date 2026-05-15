@@ -1,167 +1,144 @@
-import { useState } from 'react'
-import './ServicesPage.css'
+// src/components/ServicesPage.tsx
+// Only the EdTech "EXPLORE NOW" button triggers navigation.
+// The other two (Software, Marketing) still use href="#" as before.
 
-/* ---------------------------------------------------------- */
-/*  DATA                                                        */
-/* ---------------------------------------------------------- */
-
-const SERVICES = [
-  {
-    id: 'edtech',
-    label: 'EdTech',
-    tagline: 'LEARN · BUILD · GROW',
-    headline: 'Education Reimagined for the Digital Age',
-    description:
-      'From beginner bootcamps to advanced certification paths, our EdTech platform bridges the gap between theory and industry-ready skills — powered by real mentors and live projects.',
-    features: ['Live Mentorship', 'Certification Courses', 'Project-Based Learning'],
-    icon: (
-      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="14" width="36" height="26" rx="3" stroke="currentColor" strokeWidth="2" />
-        <path d="M16 14V10a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v4" stroke="currentColor" strokeWidth="2" />
-        <path d="M24 22v8M20 26h8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-        <path d="M6 20h36" stroke="currentColor" strokeWidth="2" />
-      </svg>
-    ),
-    accentVar: '--svc-cyan',
-  },
-  {
-    id: 'software',
-    label: 'Software',
-    tagline: 'DESIGN · DEVELOP · DEPLOY',
-    headline: 'End-to-End Software Solutions That Scale',
-    description:
-      'We architect and build enterprise-grade applications — web, mobile, and cloud-native — with a relentless focus on performance, security, and seamless user experience.',
-    features: ['Web & Mobile Apps', 'Cloud Architecture', 'API Integration'],
-    icon: (
-      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="6" y="8" width="36" height="28" rx="3" stroke="currentColor" strokeWidth="2" />
-        <path d="M16 40h16M24 36v4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-        <path d="M16 22l4 4-4 4M26 30h6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-      </svg>
-    ),
-    accentVar: '--svc-blue',
-  },
-  {
-    id: 'marketing',
-    label: 'Marketing',
-    tagline: 'REACH · ENGAGE · CONVERT',
-    headline: 'Data-Driven Campaigns That Move Markets',
-    description:
-      'Our performance marketing team blends creative strategy with precision analytics — crafting campaigns across SEO, social, and paid channels that turn audiences into advocates.',
-    features: ['SEO & Content', 'Performance Ads', 'Brand Strategy'],
-    icon: (
-      <svg viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M8 36L20 24l6 6 8-10 6 4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
-        <circle cx="36" cy="14" r="6" stroke="currentColor" strokeWidth="2" />
-        <path d="M34 14h4M36 12v4" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-        <path d="M8 40h32" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
-      </svg>
-    ),
-    accentVar: '--svc-violet',
-  },
-]
-
-/* ---------------------------------------------------------- */
-/*  CARD                                                        */
-/* ---------------------------------------------------------- */
-
-function ServiceCard({ service, index }: { service: (typeof SERVICES)[0]; index: number }) {
-  const [hovered, setHovered] = useState(false)
-
-  return (
-    <article
-      className={`svc-card svc-card--${service.id}${hovered ? ' svc-card--hovered' : ''}`}
-      style={{ animationDelay: `${index * 0.13}s` }}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      {/* Top accent bar */}
-      <div className="svc-card__bar" />
-
-      {/* Corner hex decoration */}
-      <div className="svc-card__corner" aria-hidden="true" />
-
-      {/* Icon */}
-      <div className="svc-card__icon-wrap">
-        <div className="svc-card__icon-ring" />
-        <span className="svc-card__icon">{service.icon}</span>
-      </div>
-
-      {/* Tag */}
-      <p className="svc-card__tag">{service.tagline}</p>
-
-      {/* Label */}
-      <h3 className="svc-card__label">{service.label}</h3>
-
-      {/* Headline */}
-      <h4 className="svc-card__headline">{service.headline}</h4>
-
-      {/* Description */}
-      <p className="svc-card__desc">{service.description}</p>
-
-      {/* Feature pills */}
-      <ul className="svc-card__features" role="list">
-        {service.features.map(f => (
-          <li key={f} className="svc-card__feature">
-            <span className="svc-card__feature-dot" />
-            {f}
-          </li>
-        ))}
-      </ul>
-
-      {/* CTA */}
-      <a href={`#${service.id}`} className="svc-card__cta">
-        <span>Explore Now</span>
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M5 12h14M12 5l7 7-7 7" />
-        </svg>
-      </a>
-    </article>
-  )
+interface ServicesPageProps {
+  onExploreEdTech: () => void
 }
 
-/* ---------------------------------------------------------- */
-/*  SECTION HEADING                                             */
-/* ---------------------------------------------------------- */
-
-function SectionHeading() {
+export default function ServicesPage({ onExploreEdTech }: ServicesPageProps) {
   return (
-    <div className="svc-heading">
-      <div className="svc-heading__eyebrow">
-        <span className="svc-heading__dot" />
-        <span>What We Do</span>
-        <span className="svc-heading__line" />
-      </div>
-      <h2 className="svc-heading__title">
-        Our <span className="svc-heading__highlight">Services</span>
-      </h2>
-      <p className="svc-heading__sub">
-        Three focused verticals — one unified vision. Forwex delivers expertise across education,
-        engineering, and growth to help you build what's next.
-      </p>
-    </div>
-  )
-}
+    <section id="services" className="services-section">
 
-/* ---------------------------------------------------------- */
-/*  SERVICES PAGE                                              */
-/* ---------------------------------------------------------- */
-
-export default function ServicesPage() {
-  return (
-    <section id="services" className="svc-section">
-      {/* Background glow blobs */}
-      <div className="svc-bg-glow svc-bg-glow--left"  aria-hidden="true" />
-      <div className="svc-bg-glow svc-bg-glow--right" aria-hidden="true" />
-
-      <div className="svc-inner">
-        <SectionHeading />
-
-        <div className="svc-grid">
-          {SERVICES.map((svc, i) => (
-            <ServiceCard key={svc.id} service={svc} index={i} />
-          ))}
+      {/* ── Section header ────────────────────────────── */}
+      <div className="services-header">
+        <div className="services-eyebrow">
+          <span className="eyebrow-dot" />
+          <span>WHAT WE DO</span>
+          <div className="eyebrow-line" />
         </div>
+        <h2 className="services-title">
+          OUR <span className="services-title--accent">SERVICES</span>
+        </h2>
+        <p className="services-subtitle">
+          Three focused verticals — one unified vision. Forwex delivers expertise across
+          education, engineering, and growth to help you build what's next.
+        </p>
+      </div>
+
+      {/* ── Cards grid ────────────────────────────────── */}
+      <div className="services-grid">
+
+        {/* ── EdTech card ─────────────────────────────── */}
+        <div className="service-card service-card--edtech">
+          <div className="service-card__icon">
+            {/* briefcase icon */}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2" />
+              <path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2" />
+            </svg>
+          </div>
+
+          <p className="service-card__tag">LEARN · BUILD · GROW</p>
+          <h3 className="service-card__title">EDTECH</h3>
+          <p className="service-card__subtitle">Education Reimagined for the Digital Age</p>
+          <p className="service-card__desc">
+            From beginner bootcamps to advanced certification paths, our EdTech platform
+            bridges the gap between theory and industry-ready skills — powered by real
+            mentors and live projects.
+          </p>
+
+          <ul className="service-card__list">
+            <li>Live Mentorship</li>
+            <li>Certification Courses</li>
+            <li>Project-Based Learning</li>
+          </ul>
+
+          {/* ↓ This button navigates to the EdTech page */}
+          <button
+            className="service-card__btn service-card__btn--edtech"
+            onClick={onExploreEdTech}
+          >
+            EXPLORE NOW
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </button>
+        </div>
+
+        {/* ── Software card ────────────────────────────── */}
+        <div className="service-card service-card--software">
+          <div className="service-card__icon">
+            {/* monitor icon */}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" />
+              <path d="M8 21h8M12 17v4" />
+            </svg>
+          </div>
+
+          <p className="service-card__tag">DESIGN · DEVELOP · DEPLOY</p>
+          <h3 className="service-card__title">SOFTWARE</h3>
+          <p className="service-card__subtitle">End-to-End Software Solutions That Scale</p>
+          <p className="service-card__desc">
+            We architect and build enterprise-grade applications — web, mobile, and
+            cloud-native — with a relentless focus on performance, security, and
+            seamless user experience.
+          </p>
+
+          <ul className="service-card__list">
+            <li>Web &amp; Mobile Apps</li>
+            <li>Cloud Architecture</li>
+            <li>API Integration</li>
+          </ul>
+
+          {/* <a href="#" className="service-card__btn service-card__btn--software">
+            EXPLORE NOW
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a> */}
+        <button
+         className="your-existing-class-here"
+         onClick={onExploreEdTech}
+         style={{ background: 'none', border: 'none', padding: 0, cursor: 'pointer' }}
+        >
+          EXPLORE NOW →
+        </button>
+        </div>
+
+        {/* ── Marketing card ───────────────────────────── */}
+        <div className="service-card service-card--marketing">
+          <div className="service-card__icon">
+            {/* trending-up icon */}
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+              <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" />
+              <polyline points="16 7 22 7 22 13" />
+            </svg>
+          </div>
+
+          <p className="service-card__tag">REACH · ENGAGE · CONVERT</p>
+          <h3 className="service-card__title">MARKETING</h3>
+          <p className="service-card__subtitle">Data-Driven Campaigns That Move Markets</p>
+          <p className="service-card__desc">
+            Our performance marketing team blends creative strategy with precision
+            analytics — crafting campaigns across SEO, social, and paid channels that
+            turn audiences into advocates.
+          </p>
+
+          <ul className="service-card__list">
+            <li>SEO &amp; Content</li>
+            <li>Performance Ads</li>
+            <li>Brand Strategy</li>
+          </ul>
+
+          <a href="#" className="service-card__btn service-card__btn--marketing">
+            EXPLORE NOW
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </a>
+        </div>
+
       </div>
     </section>
   )
